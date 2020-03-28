@@ -1,5 +1,11 @@
 # react-select
 
+## 3.1.1
+
+### Patch Changes
+
+- [c8d74bd5](https://github.com/JedWatson/react-select/commit/c8d74bd5710b1db6736837fb4334a59e46614a27) [#3979](https://github.com/JedWatson/react-select/pull/3979) Thanks [@mitchellhamilton](https://github.com/mitchellhamilton)! - Fix repository field
+
 ## 3.1.0
 
 ### Minor Changes
