@@ -17,7 +17,7 @@ import {
   Popout,
   MenuBuffer,
   MenuPortal,
-  MultiSelectSort,
+  MultiSelectSort, InfinityScroll,
 } from '../../examples';
 
 export default function Advanced() {
@@ -257,6 +257,18 @@ export default function Advanced() {
 
       > Type a date like "25/8/18", "tomorrow", "next monday", or "6 weeks from now" into the field to get date suggestions.
 
+
+      ## Infinity Scroll
+      ${(
+        <ExampleWrapper
+          isEditable={false}
+          label="Infinity Scroll"
+          urlPath="docs/examples/InfinityScroll.js"
+          raw={require('!!raw-loader!../../examples/InfinityScroll.js')}
+        >
+          <InfinityScroll />
+        </ExampleWrapper>
+      )}
     `}
     </Fragment>
   );

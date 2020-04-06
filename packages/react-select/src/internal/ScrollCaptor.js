@@ -30,25 +30,13 @@ class ScrollCaptor extends Component<CaptorProps> {
 
     // all the if statements are to appease Flow 😢
     if (typeof el.addEventListener === 'function') {
-      el.addEventListener('wheel', this.onWheel, false);
-    }
-    if (typeof el.addEventListener === 'function') {
-      el.addEventListener('touchstart', this.onTouchStart, false);
-    }
-    if (typeof el.addEventListener === 'function') {
-      el.addEventListener('touchmove', this.onTouchMove, false);
+      el.addEventListener('scroll', this.onScroll, false);
     }
   }
   stopListening(el: HTMLElement) {
     // all the if statements are to appease Flow 😢
     if (typeof el.removeEventListener === 'function') {
-      el.removeEventListener('wheel', this.onWheel, false);
-    }
-    if (typeof el.removeEventListener === 'function') {
-      el.removeEventListener('touchstart', this.onTouchStart, false);
-    }
-    if (typeof el.removeEventListener === 'function') {
-      el.removeEventListener('touchmove', this.onTouchMove, false);
+      el.removeEventListener('scroll', this.onScroll, false);
     }
   }
 
@@ -56,64 +44,29 @@ class ScrollCaptor extends Component<CaptorProps> {
     event.preventDefault();
     event.stopPropagation();
   };
-  handleEventDelta = (event: SyntheticEvent<HTMLElement>, delta: number) => {
-    const {
-      onBottomArrive,
-      onBottomLeave,
-      onTopArrive,
-      onTopLeave,
-    } = this.props;
-    const { scrollTop, scrollHeight, clientHeight } = this.scrollTarget;
-    const target = this.scrollTarget;
-    const isDeltaPositive = delta > 0;
-    const availableScroll = scrollHeight - clientHeight - scrollTop;
-    let shouldCancelScroll = false;
 
-    // reset bottom/top flags
-    if (availableScroll > delta && this.isBottom) {
-      if (onBottomLeave) onBottomLeave(event);
-      this.isBottom = false;
-    }
-    if (isDeltaPositive && this.isTop) {
-      if (onTopLeave) onTopLeave(event);
-      this.isTop = false;
-    }
+  onScroll = () => {
+    // todo: mobile
+    const { onBottomArrive, onTopArrive } = this.props;
+    const { scrollTop, scrollHeight, clientHeight } = this.scrollTarget;
+    const isOnBottom = scrollHeight - scrollTop === clientHeight;
 
     // bottom limit
-    if (isDeltaPositive && delta > availableScroll) {
+    if (isOnBottom) {
       if (onBottomArrive && !this.isBottom) {
         onBottomArrive(event);
       }
       target.scrollTop = scrollHeight;
-      shouldCancelScroll = true;
-      this.isBottom = true;
+      this.cancelScroll(event);
 
       // top limit
-    } else if (!isDeltaPositive && -delta > scrollTop) {
+    } else if (scrollTop === 0) {
       if (onTopArrive && !this.isTop) {
         onTopArrive(event);
       }
       target.scrollTop = 0;
-      shouldCancelScroll = true;
-      this.isTop = true;
-    }
-
-    // cancel scroll
-    if (shouldCancelScroll) {
       this.cancelScroll(event);
     }
-  };
-
-  onWheel = (event: SyntheticWheelEvent<HTMLElement>) => {
-    this.handleEventDelta(event, event.deltaY);
-  };
-  onTouchStart = (event: SyntheticTouchEvent<HTMLElement>) => {
-    // set touch start so we can calculate touchmove delta
-    this.touchStart = event.changedTouches[0].clientY;
-  };
-  onTouchMove = (event: SyntheticTouchEvent<HTMLElement>) => {
-    const deltaY = this.touchStart - event.changedTouches[0].clientY;
-    this.handleEventDelta(event, deltaY);
   };
 
   getScrollTarget = (ref: HTMLElement) => {

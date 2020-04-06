@@ -20,10 +20,16 @@ export { default as CustomLoadingMessage } from './CustomLoadingMessage';
 export { default as CustomGroup } from './CustomGroup';
 export { default as CustomMenu } from './CustomMenu';
 export { default as CustomMenuList } from './CustomMenuList';
-export { default as CustomIndicatorsContainer } from './CustomIndicatorsContainer';
-export { default as CustomIndicatorSeparator } from './CustomIndicatorSeparator';
+export {
+  default as CustomIndicatorsContainer,
+} from './CustomIndicatorsContainer';
+export {
+  default as CustomIndicatorSeparator,
+} from './CustomIndicatorSeparator';
 export { default as CustomNoOptionsMessage } from './CustomNoOptionsMessage';
-export { default as CustomMultiValueContainer } from './CustomMultiValueContainer';
+export {
+  default as CustomMultiValueContainer,
+} from './CustomMultiValueContainer';
 export { default as CustomOption } from './CustomOption';
 export { default as CustomMultiValueLabel } from './CustomMultiValueLabel';
 export { default as CustomMultiValueRemove } from './CustomMultiValueRemove';
@@ -49,3 +55,4 @@ export { default as MenuBuffer } from './MenuBuffer';
 export { default as MenuPortal } from './MenuPortal';
 export { default as Theme } from './Theme';
 export { default as StyleCompositionExample } from './StyleCompositionExample';
+export { default as InfinityScroll } from './InfinityScroll';
